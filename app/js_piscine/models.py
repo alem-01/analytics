@@ -31,7 +31,7 @@ class JsPiscine:
 	  }
 	}
 	"""
-	z01 = database.Hasura(os.getenv("HASURA_ADDR"), os.getenv("HASURA_SCRT"))
+	z01 = database.Hasura(os.getenv("HASURA_ADDR"), os.getenv("HASURA_SECRET"))
 	
 	def __init__(self):
 		pass

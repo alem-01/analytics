@@ -31,10 +31,15 @@ class Hasura:
         self.secret = secret
 
     def query(self, string):
-        request_body = '{"query":"' + string + '"}'
-        data = str.encode(request_body)
-        req = Request(self.address, data=data)
-        req.add_header("X-Hasura-Admin-Secret", self.secret)
-        content = urlopen(req)
-        response = json.load(content)
+        url = self.address
+        payload = json.dumps({
+            "query": string
+        })
+        payload = '{"query":"' + string + '"}'
+        headers = {
+            "content-type": "application/json",
+            "x-hasura-admin-secret": self.secret
+        }
+        req = requests.post(url, headers=headers, data=payload)
+        response = req.json()
         return response
