@@ -17,14 +17,14 @@ class JsPiscine:
 	count_status = """
 	{
 	  obj1: progress_aggregate(where: {objectId: {_eq: %s},
-			bestResult: {grade: {_gte: 1}}}) {
+			bestResult: {grade: {_gte: 1}}, eventId: {_eq: %d}}) {
 		aggregate {
 		  count
 		}
 	  }
 	  
 	  obj0: progress_aggregate(where: {objectId: {_eq: %s},
-			bestResult: {grade: {_lt: 1}}}) {
+			bestResult: {grade: {_lt: 1}}, , eventId: {_eq: %d}}) {
 		aggregate {
 		  count
 		}
@@ -53,8 +53,9 @@ class JsPiscine:
 		return str_children_of_js
 
 	def steps(self):
-		js_id = "3402"
-		children_of_js = self.get_children_array(self.children_of_js_Query % js_id)
+		js_objectId = "3402"
+		js_eventId = 183
+		children_of_js = self.get_children_array(self.children_of_js_Query % js_objectId)
 		children_of_child = {}
 		str_children_of_js = self.get_children_str(children_of_js)
 		grandchildren_of_js = self.get_children_array(self.children_of_js_Query % str_children_of_js)
@@ -63,7 +64,7 @@ class JsPiscine:
 
 		for grandchild in grandchildren_of_js:
 			map_ans[grandchild['id']] = []
-			res = self.z01.query(self.count_status % (grandchild['id'], grandchild['id']))
+			res = self.z01.query(self.count_status % (grandchild['id'], js_eventId, grandchild['id'], js_eventId))
 			positive = res['data']['obj1']['aggregate']['count']
 			negative = res['data']['obj0']['aggregate']['count']
 			map_ans[grandchild['id']].append({
