@@ -17,14 +17,14 @@ class JsPiscine:
 	count_status = """
 	{
 	  obj1: progress_aggregate(where: {objectId: {_eq: %s},
-			bestResult: {grade: {_gte: 1}}, eventId: {_eq: %d}}) {
+			bestResult: {grade: {_gte: 1}}, eventId: {_eq: %s}}) {
 		aggregate {
 		  count
 		}
 	  }
 	  
 	  obj0: progress_aggregate(where: {objectId: {_eq: %s},
-			bestResult: {grade: {_lt: 1}}, , eventId: {_eq: %d}}) {
+			bestResult: {grade: {_lt: 1}}, eventId: {_eq: %s}}) {
 		aggregate {
 		  count
 		}
@@ -53,8 +53,8 @@ class JsPiscine:
 		return str_children_of_js
 
 	def steps(self):
-		js_objectId = "3402"
-		js_eventId = 183
+		js_objectId = '3402'
+		js_eventId = '183'
 		children_of_js = self.get_children_array(self.children_of_js_Query % js_objectId)
 		children_of_child = {}
 		str_children_of_js = self.get_children_str(children_of_js)
